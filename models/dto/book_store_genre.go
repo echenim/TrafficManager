@@ -1,7 +1,7 @@
 package dto
 
 import (
-	"github.com/echenim/openbookstore/models"
+	"github.com/echenim/openbookstore/models/entities"
 	errors "github.com/echenim/openbookstore/utils/errors"
 )
 
@@ -18,13 +18,13 @@ func (g *GenreDto) SetName(name string) {
 	g.Name = name
 }
 
-func (g *GenreDto) Build() (models.Genre, error) {
+func (g *GenreDto) Build() (entities.Genre, error) {
 	logs := errors.ErrorBuilder{}
 	if g.Name == "" {
 		logs.Affixed("Condition is required")
 	}
 
-	return models.Genre{
+	return entities.Genre{
 		Name: g.Name,
 	}, logs.Print()
 }
