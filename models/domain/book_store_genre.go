@@ -1,4 +1,4 @@
-package entities
+package domain
 
 type Genre struct {
 	ID   int    `json:"id"`

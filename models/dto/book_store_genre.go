@@ -1,9 +1,10 @@
 package dto
 
 import (
-	"github.com/echenim/openbookstore/models/entities"
-	errors "github.com/echenim/openbookstore/utils/errors"
+	"github.com/echenim/openbookstore/models/domain"
 )
+
+// errors "github.com/echenim/openbookstore/utils/errors"
 
 type GenreDto struct {
 	ID   int
@@ -18,13 +19,13 @@ func (g *GenreDto) SetName(name string) {
 	g.Name = name
 }
 
-func (g *GenreDto) Build() (entities.Genre, error) {
-	logs := errors.ErrorBuilder{}
+func (g *GenreDto) Build() (domain.Genre, error) {
+	// logs := errors.ErrorBuilder{}
 	if g.Name == "" {
-		logs.Affixed("Condition is required")
+		//	logs.Affixed("Condition is required")
 	}
 
-	return entities.Genre{
+	return domain.Genre{
 		Name: g.Name,
-	}, logs.Print()
+	}, nil // logs.Print()
 }
