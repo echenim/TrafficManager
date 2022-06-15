@@ -1,2 +1,2 @@
-# lighthouse
+# Open Book Store
 Open book store
