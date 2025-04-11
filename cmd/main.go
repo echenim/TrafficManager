@@ -1,13 +1,14 @@
 package main
 
 import (
-	"dns-controller/config"
-	"dns-controller/internal/app"
-	"dns-controller/internal/dns"
-	"dns-controller/internal/health"
-	"dns-controller/pkg/logger"
 	"os"
 	"time"
+
+	"github.com/echenim/dns-controller/config"
+	"github.com/echenim/dns-controller/internal/app"
+	"github.com/echenim/dns-controller/internal/dns"
+	"github.com/echenim/dns-controller/internal/health"
+	"github.com/echenim/dns-controller/pkg/logger"
 )
 
 func main() {

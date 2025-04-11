@@ -1,9 +1,9 @@
 package app
 
 import (
-	"dns-controller/config"
-	"dns-controller/internal/dns"
-	"dns-controller/internal/health"
+	"github.com/echenim/dns-controller/config"
+	"github.com/echenim/dns-controller/internal/dns"
+	"github.com/echenim/dns-controller/internal/health"
 
 	"github.com/sirupsen/logrus"
 )
