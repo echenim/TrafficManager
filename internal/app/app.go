@@ -4,23 +4,25 @@ import (
 	"github.com/echenim/dns-controller/config"
 	"github.com/echenim/dns-controller/internal/dns"
 	"github.com/echenim/dns-controller/internal/health"
-
-	"github.com/sirupsen/logrus"
+	"github.com/echenim/dns-controller/pkg/logger"
 )
 
-type Application struct {
-	Config *config.Config
+type App struct {
+	Config     *config.Config
+	DNSManager *dns.DNSManager
 }
 
-func NewApplication(cfg *config.Config) *Application {
-	return &Application{Config: cfg}
+func NewApp(cfg *config.Config) *App {
+	dnsManager := dns.NewDNSManager(cfg.ZoneID)
+	return &App{
+		Config:     cfg,
+		DNSManager: dnsManager,
+	}
 }
 
-func (a *Application) Run() {
-	if !health.CheckEndpointHealth("https://www.stratalinks.com") {
-		err := dns.UpdateDNSRecord(a.Config.ZoneID, "api.stratalinks.com", "A", "192.0.2.1")
-		if err != nil {
-			logrus.Error("Critical: Unable to update DNS despite endpoint being down")
-		}
+func (app *App) Run() {
+	logger.Setup()
+	if health.CheckEndpoint("https://example.com") {
+		app.DNSManager.UpdateRecord("api.example.com", "A", "192.0.2.1")
 	}
 }
