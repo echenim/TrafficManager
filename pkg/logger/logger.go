@@ -1,15 +1,13 @@
 package logger
 
 import (
+	"os"
+
 	"github.com/sirupsen/logrus"
 )
 
-func Setup(level string) {
+func Setup() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
-	lvl, err := logrus.ParseLevel(level)
-	if err != nil {
-		logrus.SetLevel(logrus.InfoLevel)
-		return
-	}
-	logrus.SetLevel(lvl)
+	logrus.SetOutput(os.Stdout)
+	logrus.SetLevel(logrus.InfoLevel) // Set to logrus.DebugLevel as needed
 }

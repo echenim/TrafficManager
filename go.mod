@@ -1,4 +1,4 @@
-module github.com/echenim/github.com/echenim/dns-controller
+module github.com/echenim/dns-controller
 
 go 1.21.3
 
