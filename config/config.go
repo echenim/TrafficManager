@@ -1,19 +1,32 @@
 package config
 
 import (
+	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	LogLevel  string
 	AWSRegion string
 	ZoneID    string
 }
 
 func LoadConfig() *Config {
-	return &Config{
-		LogLevel:  os.Getenv("LOG_LEVEL"),
-		AWSRegion: os.Getenv("AWS_REGION"),
-		ZoneID:    os.Getenv("ZONE_ID"),
+	err := godotenv.Load() // Load .env file if exists
+	if err != nil {
+		log.Println("No .env file found")
 	}
+
+	return &Config{
+		AWSRegion: getEnv("AWS_REGION", "us-west-2"),
+		ZoneID:    getEnv("ZONE_ID", ""),
+	}
+}
+
+func getEnv(key, fallback string) string {
+	if value, exists := os.LookupEnv(key); exists {
+		return value
+	}
+	return fallback
 }
