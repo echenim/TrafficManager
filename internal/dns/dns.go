@@ -20,8 +20,9 @@ func NewDNSManager(zoneID string) *DNSManager {
 	}
 }
 
-func (m *DNSManager) UpdateRecord(name, recordType, value string) {
+func (m *DNSManager) UpdateRecord(zoneID, name, recordType, value string) {
 	input := &route53.ChangeResourceRecordSetsInput{
+		
 		ChangeBatch: &route53.ChangeBatch{
 			Changes: []*route53.Change{
 				{
@@ -29,7 +30,7 @@ func (m *DNSManager) UpdateRecord(name, recordType, value string) {
 					ResourceRecordSet: &route53.ResourceRecordSet{
 						Name: aws.String(name),
 						Type: aws.String(recordType),
-						TTL:  aws.Int64(300),
+						TTL:  aws.Int64(300),  // Lower TTL for faster propagation
 						ResourceRecords: []*route53.ResourceRecord{
 							{
 								Value: aws.String(value),
@@ -39,7 +40,7 @@ func (m *DNSManager) UpdateRecord(name, recordType, value string) {
 				},
 			},
 		},
-		HostedZoneId: aws.String("ZONE_ID"),
+		HostedZoneId: aws.String(zoneID),
 	}
 	_, err := m.Service.ChangeResourceRecordSets(input)
 	if err != nil {
